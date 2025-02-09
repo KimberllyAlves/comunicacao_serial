@@ -90,5 +90,6 @@ Para rodar no Raspberry Pi Pico:
 - Logs das interações são exibidos no Serial Monitor para depuração.
 
 ## Demonstração
-📽️ Confira um vídeo do funcionamento: [**[Link do Vídeo](#)**](https://drive.google.com/file/d/1qFZ9pxgPlHVaem2PTpxlvllQp2vnID62/view?usp=sharing)
+📽️ Confira um vídeo do funcionamento: [Clique Aqui](https://drive.google.com/file/d/1qFZ9pxgPlHVaem2PTpxlvllQp2vnID62/view?usp=sharing)
+
 
