@@ -33,12 +33,12 @@ void gpio_irq_handler(uint gpio, uint32_t events)
         if (gpio == button_A) {
           estado_led_verde = !estado_led_verde;
           gpio_put(LED_GREEN, estado_led_verde);
-          printf("Botão A apertado \n ");
+          printf("Led verde %s \n ", estado_led_verde ? "LIGADO" : "DESLIGADO");
         }
         else if (gpio == button_B) {
           estado_led_azul = !estado_led_azul;
           gpio_put(LED_BLUE, estado_led_azul);
-          printf("Botão B apertado \n ");
+          printf("Led azul %s \n ", estado_led_azul ? "LIGADO" : "DESLIGADO");
             
         }
                              
@@ -95,8 +95,15 @@ int main()
     // Atualiza o conteúdo do display com animações
     ssd1306_fill(&ssd, !cor); // Limpa o display
     ssd1306_rect(&ssd, 3, 3, 122, 58, cor, !cor); // Desenha um retângulo
-    ssd1306_draw_string(&ssd, "CEPEDI   TIC37", 8, 10); // Desenha uma string
-    ssd1306_draw_string(&ssd, "EMBARCATECH", 20, 30); // Desenha uma string
+
+    //Impressão do estado do led verde
+    if (estado_led_verde) ssd1306_draw_string(&ssd, "VERDE ON", 8, 10); // Desenha uma string
+    else ssd1306_draw_string(&ssd, "VERDE OFF", 8, 10); // Desenha uma string
+
+    //Impressão estado do led azul
+    if (estado_led_azul) ssd1306_draw_string(&ssd, "AZUL ON", 8, 25); // Desenha uma string
+    else ssd1306_draw_string(&ssd, "AZUL OFF", 8, 25); // Desenha uma string
+    
     ssd1306_draw_string(&ssd, "PROF WILTON", 15, 48); // Desenha uma string      
     ssd1306_send_data(&ssd); // Atualiza o display
 
