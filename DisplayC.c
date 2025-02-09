@@ -1,0 +1,105 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include "pico/stdlib.h"
+#include "hardware/i2c.h"
+#include "inc/ssd1306.h"
+#include "inc/font.h"
+#include "hardware/timer.h"
+#include "inc/matriz_rgb.h"
+#include "inc/animacao_contagem.h"
+
+#define I2C_PORT i2c1
+#define I2C_SDA 14
+#define I2C_SCL 15
+#define endereco 0x3C
+#define LED_BLUE 12 // LED 2 conectado ao pino 12
+#define LED_GREEN 11 // LED 3 conectado ao pino 11
+const uint button_A = 5; // Botão A = 5, Botão B = 6 
+const uint button_B = 6; // Botão A = 5, Botão B = 6
+
+static volatile uint32_t last_time = 0; // Armazena o tempo do último evento (em microssegundos)
+bool estado_led_verde = false;
+bool estado_led_azul = false;
+
+// Função de interrupção com debouncing
+void gpio_irq_handler(uint gpio, uint32_t events)
+{
+    // Obtém o tempo atual em microssegundos
+    uint32_t current_time = to_us_since_boot(get_absolute_time());
+    // Verifica se passou tempo suficiente desde o último evento
+    if (current_time - last_time > 200000) // 200 ms de debouncing
+    {
+        last_time = current_time; // Atualiza o tempo do último evento
+        if (gpio == button_A) {
+          estado_led_verde = !estado_led_verde;
+          gpio_put(LED_GREEN, estado_led_verde);
+          printf("Botão A apertado \n ");
+        }
+        else if (gpio == button_B) {
+          estado_led_azul = !estado_led_azul;
+          gpio_put(LED_BLUE, estado_led_azul);
+          printf("Botão B apertado \n ");
+            
+        }
+                             
+    }
+}
+
+int main()
+{
+  // Inicializa entradas e saídas.
+  stdio_init_all();
+
+  // Inicializa matriz de LEDs NeoPixel.
+  npInit(LED_PIN);
+
+  // Inicializa os LEDs
+  gpio_init(LED_GREEN);              // Inicializa o pino do LED
+  gpio_set_dir(LED_GREEN, GPIO_OUT); // Configura o pino como saída
+  gpio_init(LED_BLUE);              // Inicializa o pino do LED
+  gpio_set_dir(LED_BLUE, GPIO_OUT); // Configura o pino como saída
+
+  // Inicializa o botão
+  gpio_init(button_A);
+  gpio_set_dir(button_A, GPIO_IN); // Configura o pino como entrada
+  gpio_pull_up(button_A);          // Habilita o pull-up interno
+
+  gpio_init(button_B);
+  gpio_set_dir(button_B, GPIO_IN); // Configura o pino como entrada
+  gpio_pull_up(button_B);          // Habilita o pull-up interno
+
+  // I2C Initialisation. Using it at 400Khz.
+  i2c_init(I2C_PORT, 400 * 1000);
+
+  gpio_set_function(I2C_SDA, GPIO_FUNC_I2C); // Set the GPIO pin function to I2C
+  gpio_set_function(I2C_SCL, GPIO_FUNC_I2C); // Set the GPIO pin function to I2C
+  gpio_pull_up(I2C_SDA); // Pull up the data line
+  gpio_pull_up(I2C_SCL); // Pull up the clock line
+  ssd1306_t ssd; // Inicializa a estrutura do display
+  ssd1306_init(&ssd, WIDTH, HEIGHT, false, endereco, I2C_PORT); // Inicializa o display
+  ssd1306_config(&ssd); // Configura o display
+  ssd1306_send_data(&ssd); // Envia os dados para o display
+
+  // Limpa o display. O display inicia com todos os pixels apagados.
+  ssd1306_fill(&ssd, false);
+  ssd1306_send_data(&ssd);
+
+  // Configuração da interrupção com callback
+  gpio_set_irq_enabled_with_callback(button_A, GPIO_IRQ_EDGE_FALL, true, &gpio_irq_handler);
+  gpio_set_irq_enabled_with_callback(button_B, GPIO_IRQ_EDGE_FALL, true, &gpio_irq_handler);
+
+  bool cor = true;
+  while (true)
+  {
+    cor = !cor;
+    // Atualiza o conteúdo do display com animações
+    ssd1306_fill(&ssd, !cor); // Limpa o display
+    ssd1306_rect(&ssd, 3, 3, 122, 58, cor, !cor); // Desenha um retângulo
+    ssd1306_draw_string(&ssd, "CEPEDI   TIC37", 8, 10); // Desenha uma string
+    ssd1306_draw_string(&ssd, "EMBARCATECH", 20, 30); // Desenha uma string
+    ssd1306_draw_string(&ssd, "PROF WILTON", 15, 48); // Desenha uma string      
+    ssd1306_send_data(&ssd); // Atualiza o display
+
+    sleep_ms(1000);
+  }
+}
