@@ -99,14 +99,14 @@ int main()
     ssd1306_rect(&ssd, 3, 3, 122, 58, cor, !cor); // Desenha um retângulo
 
     //Impressão do estado do led verde
-    if (estado_led_verde) ssd1306_draw_string(&ssd, "VERDE ON", 8, 10); // Desenha uma string
-    else ssd1306_draw_string(&ssd, "VERDE OFF", 8, 10); // Desenha uma string
+    if (estado_led_verde) ssd1306_draw_string(&ssd, "Verde ON", 8, 10); // Desenha uma string
+    else ssd1306_draw_string(&ssd, "Verde OFF", 8, 10); // Desenha uma string
 
     //Impressão estado do led azul
-    if (estado_led_azul) ssd1306_draw_string(&ssd, "AZUL ON", 8, 25); // Desenha uma string
-    else ssd1306_draw_string(&ssd, "AZUL OFF", 8, 25); // Desenha uma string
+    if (estado_led_azul) ssd1306_draw_string(&ssd, "Azul ON", 8, 25); // Desenha uma string
+    else ssd1306_draw_string(&ssd, "Azul OFF", 8, 25); // Desenha uma string
     
-    ssd1306_draw_string(&ssd, c, 15, 48); // Desenha uma string      
+    ssd1306_draw_string(&ssd, c, 15, 48); // Impressão dos caracteres digitados      
     ssd1306_send_data(&ssd); // Atualiza o display
 
     if (stdio_usb_connected()) {
@@ -114,7 +114,7 @@ int main()
       if (get != PICO_ERROR_TIMEOUT && get != '\n') {
         c[0] = (char)get;
         c[1] = '\0'; //caractere nulo
-        animacao_contador(c[0]);
+        animacao_contador(c[0]); //apresentando matriz números
       }
     }
 
