@@ -28,41 +28,41 @@ set(PICO_BOARD pico CACHE STRING "Board type")
 # Pull in Raspberry Pi Pico SDK (must be before project)
 include(pico_sdk_import.cmake)
 
-project(DisplayC C CXX ASM)
+project(comunicacao_serial C CXX ASM)
 
 # Initialise the Raspberry Pi Pico SDK
 pico_sdk_init()
 
 # Add executable. Default name is the project name, version 0.1
 
-add_executable(DisplayC DisplayC.c inc/ssd1306.c)
+add_executable(comunicacao_serial comunicacao_serial.c inc/ssd1306.c)
 
-pico_set_program_name(DisplayC "DisplayC")
-pico_set_program_version(DisplayC "0.1")
+pico_set_program_name(comunicacao_serial "comunicacao_serial")
+pico_set_program_version(comunicacao_serial "0.1")
 
 # Generate PIO header
-pico_generate_pio_header(DisplayC ${CMAKE_CURRENT_LIST_DIR}/ws2818b.pio)
+pico_generate_pio_header(comunicacao_serial ${CMAKE_CURRENT_LIST_DIR}/ws2818b.pio)
 
 # Modify the below lines to enable/disable output over UART/USB
-pico_enable_stdio_uart(DisplayC 0)
-pico_enable_stdio_usb(DisplayC 1)
+pico_enable_stdio_uart(comunicacao_serial 0)
+pico_enable_stdio_usb(comunicacao_serial 1)
 
 # Add the standard library to the build
-target_link_libraries(DisplayC
+target_link_libraries(comunicacao_serial
         pico_stdlib)
 
 # Add the standard include files to the build
-target_include_directories(DisplayC PRIVATE
+target_include_directories(comunicacao_serial PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}
 )
 
 # Add any user requested libraries
-target_link_libraries(DisplayC 
+target_link_libraries(comunicacao_serial 
         hardware_i2c
         hardware_clocks
         hardware_pio
 
         )
 
-pico_add_extra_outputs(DisplayC)
+pico_add_extra_outputs(comunicacao_serial)
 

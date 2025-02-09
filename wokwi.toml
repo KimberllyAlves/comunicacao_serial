@@ -1,4 +1,4 @@
 [wokwi]
 version = 1
-firmware = 'build/DisplayC.uf2'
-elf = 'build/DisplayC.elf'
+firmware = 'build/comunicacao_serial.uf2'
+elf = 'build/comunicacao_serial.elf'
