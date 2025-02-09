@@ -89,6 +89,8 @@ int main()
   gpio_set_irq_enabled_with_callback(button_B, GPIO_IRQ_EDGE_FALL, true, &gpio_irq_handler);
 
   bool cor = true;
+
+  char c[2];
   while (true)
   {
     cor = !cor;
@@ -104,9 +106,19 @@ int main()
     if (estado_led_azul) ssd1306_draw_string(&ssd, "AZUL ON", 8, 25); // Desenha uma string
     else ssd1306_draw_string(&ssd, "AZUL OFF", 8, 25); // Desenha uma string
     
-    ssd1306_draw_string(&ssd, "PROF WILTON", 15, 48); // Desenha uma string      
+    ssd1306_draw_string(&ssd, c, 15, 48); // Desenha uma string      
     ssd1306_send_data(&ssd); // Atualiza o display
 
-    sleep_ms(1000);
+    if (stdio_usb_connected()) {
+      int get = getchar_timeout_us(1000000); //espera 100ms para receber um caractere
+      if (get != PICO_ERROR_TIMEOUT && get != '\n') {
+        c[0] = (char)get;
+        c[1] = '\0'; //caractere nulo
+        animacao_contador(c[0]);
+      }
+    }
+
+    sleep_ms(50);
   }
+  return 0;
 }

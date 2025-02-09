@@ -1,7 +1,7 @@
-void animacao_contador(int a){
+void animacao_contador(char a){
         npClear();
 
-        if (a == 0) {
+        if (a == '0') {
                 //frame 0 
                 int frame[5][5][3] = {
                         {{0, 0, 0}, {0, 202, 179}, {0, 202, 179}, {0, 202, 179}, {0, 0, 0}},
@@ -13,7 +13,7 @@ void animacao_contador(int a){
                 desenho_sprite(frame);
         }
 
-        else if (a == 1) {
+        else if (a == '1') {
                 //frame 1 
                 int frame[5][5][3] = {
                         {{0, 0, 0}, {0, 202, 179}, {0, 202, 179}, {0, 0, 0}, {0, 0, 0}},
@@ -25,7 +25,7 @@ void animacao_contador(int a){
                 desenho_sprite(frame);
         }
 
-        else if (a == 2) {
+        else if (a == '2') {
                 //frame 2 
                 int frame[5][5][3] = {
                         {{0, 0, 0}, {0, 202, 179}, {0, 202, 179}, {0, 202, 179}, {0, 0, 0}},
@@ -37,7 +37,7 @@ void animacao_contador(int a){
                 desenho_sprite(frame);
         }
 
-        else if (a == 3) {
+        else if (a == '3') {
                 //frame 3 
                 int frame[5][5][3] = {
                         {{0, 0, 0}, {0, 202, 179}, {0, 202, 179}, {0, 202, 179}, {0, 0, 0}},
@@ -49,7 +49,7 @@ void animacao_contador(int a){
                 desenho_sprite(frame);
         }
         
-        else if (a == 4) {
+        else if (a == '4') {
                 //frame 4 
                 int frame[5][5][3] = {
                         {{0, 0, 0}, {0, 202, 179}, {0, 0, 0}, {0, 202, 179}, {0, 0, 0}},
@@ -61,7 +61,7 @@ void animacao_contador(int a){
                 desenho_sprite(frame);
         }
 
-        else if (a == 5) {
+        else if (a == '5') {
                 //frame 5 
                 int frame[5][5][3] = {
                         {{0, 0, 0}, {0, 202, 179}, {0, 202, 179}, {0, 202, 179}, {0, 0, 0}},
@@ -73,7 +73,7 @@ void animacao_contador(int a){
                 desenho_sprite(frame);
         }
 
-        else if (a == 6) {
+        else if (a == '6') {
                 //frame 6 
                 int frame[5][5][3] = {
                         {{0, 0, 0}, {0, 202, 179}, {0, 202, 179}, {0, 202, 179}, {0, 0, 0}},
@@ -85,7 +85,7 @@ void animacao_contador(int a){
                 desenho_sprite(frame);
         }
 
-        else if (a == 7) {
+        else if (a == '7') {
                 //frame 7 
                 int frame[5][5][3] = {
                         {{0, 0, 0}, {0, 202, 179}, {0, 202, 179}, {0, 202, 179}, {0, 0, 0}},
@@ -97,7 +97,7 @@ void animacao_contador(int a){
                 desenho_sprite(frame);
         }
 
-        else if (a == 8) {
+        else if (a == '8') {
                 //frame 8 
                 int frame[5][5][3] = {
                         {{0, 0, 0}, {0, 202, 179}, {0, 202, 179}, {0, 202, 179}, {0, 0, 0}},
@@ -109,7 +109,7 @@ void animacao_contador(int a){
                 desenho_sprite(frame);
         }
 
-        else if (a == 9) {
+        else if (a == '9') {
                 //frame 9 
                 int frame[5][5][3] = {
                         {{0, 0, 0}, {0, 202, 179}, {0, 202, 179}, {0, 202, 179}, {0, 0, 0}},
